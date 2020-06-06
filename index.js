@@ -1,17 +1,17 @@
 const dotenv = require('dotenv').config(),
-express = require("express"), 
-cron = require("node-cron"), 
-weatherData = require("./api/weather"), 
-sms = require("./api/send_sms"), 
-email = require("./api/email"), 
-app = express(), 
-passport = require("passport"),  
-flash = require('express-flash'), 
-session = require("express-session"),
-initPassport = require('./api/initPassport')
+    express = require("express"),
+    cron = require("node-cron"),
+    weatherData = require("./api/weather"),
+    sms = require("./api/send_sms"),
+    email = require("./api/email"),
+    app = express(),
+    passport = require("passport"),
+    flash = require('express-flash'),
+    session = require("express-session"),
+    initPassport = require('./api/initPassport'),
 
-//db config 
-db = require('./models')
+    //db config 
+    db = require('./models')
 
 //passport config
 require('./config/passport')(passport)
@@ -37,12 +37,12 @@ app.use(passport.session())
 app.use(flash())
 
 // Global variables
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.locals.success_msg = req.flash('success_msg')
     res.locals.error_msg = req.flash('error_msg')
     res.locals.error = req.flash('error')
     next();
-  });
+});
 
 //routes
 app.use('/', require('./routes/index'))
@@ -61,10 +61,12 @@ let insertDataEnabled = false
 
 //schedule tasks to be run on the server
 //cron.schedule("*/15 * * * *", () => {
-cron.schedule("*/15 * * * * *", () => {
+cron.schedule("*/5 * * * * *", async () => {
     let response = weatherData.run('Erie, US')
         .then(res => {
-            handleAlerts(res.alerts);
+            let users = queryUsers()
+
+            handleAlerts(res.alerts)
 
             res.dbData.map((dbData) => {
                 let desc = dbData[0]
@@ -87,7 +89,23 @@ cron.schedule("*/15 * * * * *", () => {
 
 })
 
-function handleAlerts(alerts) {
+async function queryUsers() {
+
+    let data = await db.User.findAll({
+        include: [{
+            model: db.Settings,
+            // where: { user_id: user_id }
+        },
+        {
+            model: db.Region,
+            //where: { user_id: user_id }
+        }]
+    })
+
+    return data
+}
+
+function handleAlerts(alerts, smsEnabled, emailEnabled) {
 
     if (smsEnabled == true) {
 

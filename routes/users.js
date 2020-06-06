@@ -117,11 +117,11 @@ router.post('/settings', ensureAuthenticated, (req, res) => {
     res.end()
 })
 
-// Region
-router.post('/regions', (req, res) => {
+// add Region
+router.post('/regions', ensureAuthenticated, (req, res) => {
     const region = req.body.region
 
-    let user_id = req.session.user_id
+    let user_id = req.user.id
     try {
         db.Region.create({
             user_id: user_id,
@@ -133,6 +133,25 @@ router.post('/regions', (req, res) => {
     res.redirect('/dashboard')
     res.end()
 })
+
+// //select region and then display to dashboard
+// router.post('/selectRegions', ensureAuthenticated, (req, res) => {
+//     const region = req.body.region
+
+//     let user_id = req.user.id
+//     try {
+//         return db.Region.findOne({
+//             where: {
+//                 user_id: user_id,
+//                 region: region
+//             }
+//         })
+//     }
+//     catch { (err => console.log(err)) }
+
+//     res.redirect('/dashboard')
+//     res.end()
+// })
 
 async function updateUserSettings(location, email, alertInterval, phoneNum, smsNotification, emailNotification, pushNotification, alexaNotification, user_id) {
 

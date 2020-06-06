@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       timestamp: false
   });
   User.associate = function(models) {
-    // associations can be defined here
+    User.hasOne(models.Settings, {foreignKey: 'user_id'})
+    User.hasOne(models.Region, {foreignKey: 'user_id'})
   };
   return User;
 };
