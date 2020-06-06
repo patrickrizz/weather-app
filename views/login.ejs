@@ -1,0 +1,87 @@
+<html>
+
+<head>
+    <title>Weather App</title>
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Weather App</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="#login" class="modal-trigger">Login</a></li>
+            </ul>
+            <ul class="sidenav" id="mobile-demo">
+                <li><a href="#login" class="modal-trigger">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col m12">
+                <h1>Weather App Ui</h1>
+                <% if(typeof errors !='undefined'){ %><% errors.forEach(function(error){ %><div class="alert alert-warning alert-dismissible fade show" role="alert"><%=error.msg %><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><%}); %><%} %><% if(success_msg !=''){ %><div class="alert alert-success alert-dismissible fade show" role="alert"><%=success_msg %><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><%} %><% if(error_msg !=''){ %><div class="alert alert-danger alert-dismissible fade show" role="alert"><%=error_msg %><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><%} %><% if(error !=''){ %><div class="alert alert-danger alert-dismissible fade show" role="alert"><%=error %><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><%} %>
+            </div>
+        </div>
+        <div class="row container">
+            <form class="col m12" action="/users/register" method="post">
+                <div class="row">
+                    <div class="input-field col m4">
+                        <input type="text" class="validate" name="email"
+                            value="<%= typeof email != 'undefined' ? email : '' %>">
+                        <label for="email">Email</label>
+                    </div>
+                    <div class="input-field col m4">
+                        <input type="password" class="validate" name="password"
+                            value="<%= typeof password != 'undefined' ? password : '' %>">
+                        <label for="password">Password</label>
+                    </div>
+                    <div class="input-field col m4">
+                        <input type="password" class="validate" name="password2"
+                            value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
+                        <label for="password2">Confirm Passord</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-large waves-effect waves-light">Sign up</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Login Modal -->
+        <div id="login" class="modal">
+            <div class="modal-content">
+                <form class="col m12" action="/users/login" method="post">
+                    <div class="row">
+                        <div class="input-field col m6">
+                            <input id="last_name" type="text" class="validate" name="email">
+                            <label for="last_name">Email</label>
+                        </div>
+                        <div class="input-field col m6">
+                            <input id="last_name" type="text" class="validate" name="password">
+                            <label for="last_name">Password</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-large waves-effect waves-light" value="Log In">Sign in</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script>
+            M.AutoInit();
+        </script>
+
+</body>
+
+</html>

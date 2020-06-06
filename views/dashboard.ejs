@@ -1,0 +1,206 @@
+<html>
+
+<head>
+    <title>Weather App</title>
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <a href="#" class="brand-logo">Weather App</a>            
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="/users/logout">Logout</a></li>
+                <li><a href="#settings" class="modal-trigger">Settings</a></li>
+            </ul>
+            <ul class="sidenav" id="mobile-demo">
+                <li><a href="/users/logout">Logout</a></li>
+                <li><a href="#settings" class="modal-trigger">Settings</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col m12">
+                <h1>Weather App</h1>
+                <p class="center">Welcome, <a href=""><%- userSession.name -%></a></p>
+            </div>
+        </div>
+        <div class="row container">
+            <div class="col m12">
+                <div class="row">
+                    <div class="col m6">
+                        <div class="input-field col m8">
+                            <select>
+                                <option value="" disabled selected></option>
+                                <% for (var i = 0; i < regionData.length; i++) { %>
+                                <option value="<%- regionData[i].region -%>"><%- regionData[i].region -%></option>
+                                <% } %>
+
+                            </select>
+                            <label>Select Region</label>
+                        </div>
+                        <div class="col m4">
+                            <button type="submit" class="btn btn-large waves-effect waves-light">Select</button>
+                        </div>
+                    </div>
+                    <div class="col m6">
+                        <form action="/users/regions" method="post">
+                            <div class="input-field col m8">
+                                <input id="last_name" type="text" class="validate" name="region">
+                                <label for="last_name">New Region</label>
+                            </div>
+                            <div class="col m4">
+                                <button type="submit" class="btn btn-large waves-effect waves-light">Add</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row header">
+
+            <div class="col m2">
+                <div>ID</div>
+            </div>
+            <div class="col m2">
+                <div>Description</div>
+            </div>
+            <div class="col m2">
+                <div>Main</div>
+            </div>
+            <div class="col m2">
+                <div>Temptrature</div>
+            </div>
+            <div class="col m2">
+                <div>Feels Like</div>
+            </div>
+            <div class="col m2">
+                <div>Humidity</div>
+            </div>
+        </div>
+        <% for (var i = 0; i < data.length; i++) { %>
+        <div class="row">
+            <div class="col m2">
+                <div><%= data[i].id %></div>
+            </div>
+            <div class="col m2">
+                <div><%= data[i].desc %></div>
+            </div>
+            <div class="col m2">
+                <div><%= data[i].main %></div>
+            </div>
+            <div class="col m2">
+                <div><%= data[i].temp %>&#8457;</div>
+            </div>
+            <div class="col m2">
+                <div><%= data[i].feels_like %>&#8457;</div>
+            </div>
+            <div class="col m2">
+                <div><%= data[i].humidity %></div>
+            </div>
+        </div>
+        <% } %>
+    </div> <!-- End Container -->
+    <!-- Settings Modal -->
+    <div id="settings" class="modal">
+        <div class="modal-content">
+            <h4>Settings</h4>
+            <div class="row">
+                <form class="col m12" action="/users/settings" method="post">
+                    <div class="row">
+                        <div class="input-field col m6">
+                            <input id="location" type="text" class="validate" name="location"
+                                value="<%= userData.location %>">
+                            <label for="location">Location</label>
+                        </div>
+                        <div class="input-field col m6">
+                            <input id="email" type="email" class="validate" name="email" value="<%= userData.email %>">
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col m6">
+                            <input id="phoneNum" type="tel" class="validate" name="phoneNum"
+                                value="<%= userData.phoneNum %>">
+                            <label for="phoneNum">Phone Number</label>
+                        </div>
+                        <div class="input-field col m6">
+                            <input id="alertInterval" type="text" class="validate" name="alertInterval"
+                                value="<%= userData.alertInterval %>">
+                            <label for="alertInterval">Alert Interval (minutes)</label>
+                        </div>
+                    </div>
+                    <!-- Switch -->
+                    <div class="row">
+                        <div class="col m3">
+                            <div class="switch">
+                                <label>
+                                    Enable SMS
+                                    <input <%- userData.smsNotification ? 'checked' : '' -%> type="checkbox"
+                                        name="smsNotification">
+                                    <span class="lever"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col m3">
+                            <div class="switch">
+                                <label>
+                                    Enable Email
+                                    <input <%- userData.emailNotification ? 'checked' : '' -%> type="checkbox"
+                                        name="emailNotification">
+                                    <span class="lever"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col m3">
+                            <div class="switch">
+                                <label>
+                                    Enable Push Notifications
+                                    <input <%- userData.pushNotification ? 'checked' : '' -%> type="checkbox"
+                                        name="pushNotification">
+                                    <span class="lever"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col m3">
+                            <div class="switch">
+                                <label>
+                                    Enable Alexa Notifications
+                                    <input <%- userData.alexaNotification ? 'checked' : '' -%> type="checkbox"
+                                        name="alexaNotification">
+                                    <span class="lever"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col m3">
+                            <button type="submit" class="btn btn-large btn-right">Change settings</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        M.AutoInit();
+    </script>
+
+
+</body>
+
+</html>
