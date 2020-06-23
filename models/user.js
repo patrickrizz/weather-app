@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     firstName: DataTypes.STRING,
@@ -7,10 +7,10 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING
   }, {
       timestamp: false
-  });
+  })
   User.associate = function(models) {
     User.hasOne(models.Settings, {foreignKey: 'user_id'})
     User.hasOne(models.Region, {foreignKey: 'user_id'})
-  };
-  return User;
-};
+  }
+  return User
+}

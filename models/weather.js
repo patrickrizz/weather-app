@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 module.exports = (sequelize, DataTypes) => {
   const Weather = sequelize.define('Weather', {
     desc: DataTypes.STRING,
@@ -8,9 +8,9 @@ module.exports = (sequelize, DataTypes) => {
     feels_like: DataTypes.INTEGER
   }, {
     timestamp: false
-  });
+  })
   Weather.associate = function(models) {
     // associations can be defined here
-  };
-  return Weather;
-};
+  }
+  return Weather
+}

@@ -1,7 +1,7 @@
 const express = require('express')
 const db = require('../models/')
 const router = express.Router()
-const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
+const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth')
 const session = require('express-session')
 
 router.use(session())

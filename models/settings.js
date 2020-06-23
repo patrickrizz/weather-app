@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 module.exports = (sequelize, DataTypes) => {
     const Settings = sequelize.define('Settings', {
         user_id: DataTypes.INTEGER,
@@ -11,13 +11,13 @@ module.exports = (sequelize, DataTypes) => {
         location: DataTypes.STRING
     }, {
         timestamps: false
-    });
+    })
     Settings.associate = function (models) {
         // associations can be defined here       
-    };
+    }
 
-    return Settings;
+    return Settings
 
-};
+}
 
 
