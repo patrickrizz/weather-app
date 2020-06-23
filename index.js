@@ -2,18 +2,16 @@ const { getUserSettings } = require("./api/getUserSettings")
 const { handleAlerts } = require("./api/alerts/handleAlerts")
 const { insertWeatherData } = require("./api/weather/insertWeatherData")
 const weatherData = require("./api/weather/weather")
-const dotenv = require('dotenv').config(),
-    express = require("express"),
-    cron = require("node-cron"),
-    app = express(),
-    passport = require("passport"),
-    flash = require('express-flash'),
-    session = require("express-session"),
-    //db config 
-    db = require('./models')
-
-//passport config
+const express = require("express")
+const cron = require("node-cron")
+const app = express()
+const passport = require("passport")
+const flash = require('express-flash')
+const session = require("express-session")
+require('dotenv').config()
 require('./config/passport')(passport)
+
+const PORT = process.env.PORT
 
 //ejs
 app.set('view engine', 'ejs')
@@ -72,11 +70,6 @@ cron.schedule("*/15 * * * * *", async () => {
             })
 
     }
-    // initalize weather && set alerts *skip*
-
-    // each time it runs, check did we alert?
-    // return the raw data so we can do things
-    //let response = weatherData.run('Erie, US').then( res => console.log(res))
 
 })
 
@@ -95,6 +88,6 @@ function handleWeatherData(res, region) {
     })
 }
 
-app.listen("3000", () => {
-    console.log('App is listening on port 3000')
+app.listen(PORT, () => {
+    console.log(`App is listening on port ${PORT}`)
 })

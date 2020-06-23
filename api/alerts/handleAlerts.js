@@ -9,7 +9,7 @@ async function handleAlerts(alerts) {
     for (i = 0; i < userData.length; i++) {
         let emailNotification = userData[i].Setting.emailNotification
         let smsNotification = userData[i].Setting.smsNotification
-        let alertsNotification = 1
+        let alertsNotification = 0
 
         if (smsNotification === 1)
             sms(alert).then(message => console.log(message.sid))
