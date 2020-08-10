@@ -3,7 +3,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy
 const bcrypt = require('bcrypt')
 
 // Load User model
-const db = require('../models')
+const db = require('../db/models')
 
 module.exports = function (passport) {
     passport.use(

@@ -61,7 +61,7 @@ cron.schedule("*/15 * * * * *", async () => {
 
     for (i = 0; i < userData.length; i++) {
 
-        let region = userData[i].Region.region
+        let region = userData[i].region
 
         let response = weatherData.run(region || 'Erie, US')
             .then(res => {

@@ -3,7 +3,7 @@ const router = express.Router()
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 // Load User model
-const db = require('../models/')
+const db = require('../db/models/')
 const { forwardAuthenticated, ensureAuthenticated } = require('../config/auth')
 
 // Login Page

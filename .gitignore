@@ -3,3 +3,5 @@ db
 .vscode
 .vs
 .env
+.sequelizerc
+log

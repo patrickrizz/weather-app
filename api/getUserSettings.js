@@ -1,6 +1,6 @@
 const
     //db config 
-    db = require('../models')
+    db = require('../db/models')
 
 async function getUserSettings() {
 
